@@ -3,66 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OPay Faulty Device Tracking</title>
+    <title>Opay Faulty Device Tracking System</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            font-family: 'Segoe UI', Teleram, 'Helvetica Neue', sans-serif;
         }
 
         body {
-            background: #f5f6fa;
+            background: linear-gradient(135deg, #1a5f7a 0%, #0a3b4f 100%);
+            min-height: 100vh;
             padding: 20px;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
         }
 
-        /* Header with Excel-style tabs */
+        /* Website Header */
+        .website-header {
+            background: white;
+            border-radius: 15px 15px 0 0;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #ff6b35;
+        }
+
+        .website-title h1 {
+            color: #1a5f7a;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .website-title .subtitle {
+            color: #ff6b35;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .website-url {
+            background: #f5f5f5;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+        }
+
+        .website-url span {
+            color: #1a5f7a;
+            font-weight: 600;
+        }
+
+        /* Excel-style tabs */
         .excel-tabs {
             display: flex;
             gap: 2px;
             background: #e0e0e0;
             padding: 5px 5px 0 5px;
-            border-radius: 8px 8px 0 0;
+            border-radius: 0;
             overflow-x: auto;
+            flex-wrap: wrap;
         }
 
         .excel-tab {
-            padding: 10px 25px;
+            padding: 12px 25px;
             background: #d0d0d0;
             border: none;
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 600;
             color: #333;
             white-space: nowrap;
+            font-size: 14px;
+            transition: all 0.3s;
+            border-radius: 8px 8px 0 0;
         }
 
         .excel-tab.active {
             background: white;
-            color: #0078d4;
-            border-bottom: 3px solid #0078d4;
+            color: #1a5f7a;
+            border-bottom: 3px solid #ff6b35;
+            transform: translateY(-2px);
         }
 
         /* Main content area */
         .sheet-content {
             background: white;
-            border-radius: 0 0 8px 8px;
-            padding: 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 0 0 15px 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
             margin-bottom: 20px;
         }
 
-        /* Faulty Dispatch Form - Updated with new fields */
+        /* MOTHER WAREHOUSE DASHBOARD */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .dashboard-header h2 {
+            color: #1a5f7a;
+            font-size: 24px;
+        }
+
+        .live-badge {
+            background: #ff6b35;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* Vendor Login Section */
+        .vendor-login-panel {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .vendor-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .vendor-selector select {
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+            min-width: 300px;
+            font-size: 14px;
+        }
+
+        .vendor-login-btn {
+            background: white;
+            color: #1a5f7a;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Key Metrics Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 25px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .dashboard-card h3 {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-card .number {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        /* Live Feed */
+        .live-feed {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #ff6b35;
+        }
+
+        .feed-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            background: white;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+
+        .feed-time {
+            min-width: 100px;
+            color: #ff6b35;
+            font-weight: 600;
+        }
+
+        .feed-content {
+            flex: 1;
+            margin-left: 15px;
+        }
+
+        .feed-title {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .feed-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-red { background: #ff4444; color: white; }
+        .badge-blue { background: #3498db; color: white; }
+        .badge-green { background: #28a745; color: white; }
+
+        /* Main Dispatch Form - Exact match to database */
         .dispatch-form {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
         }
 
         .form-group {
@@ -73,7 +256,7 @@
         .form-group label {
             font-size: 13px;
             font-weight: 600;
-            color: #444;
+            color: #1a5f7a;
             margin-bottom: 5px;
         }
 
@@ -86,26 +269,20 @@
             font-size: 14px;
         }
 
-        .form-group input:focus,
-        .form-group select:focus {
-            border-color: #0078d4;
-            outline: none;
-        }
-
-        /* Table matching your updated structure */
+        /* Data Table - Exact column headers */
         .data-table {
             width: 100%;
             border-collapse: collapse;
             font-size: 13px;
+            background: white;
         }
 
         .data-table th {
-            background: #f0f2f5;
+            background: #1a5f7a;
+            color: white;
             padding: 12px 8px;
             text-align: left;
             font-weight: 600;
-            color: #333;
-            border-bottom: 2px solid #ccc;
             white-space: nowrap;
         }
 
@@ -118,8 +295,30 @@
             background: #f5f9ff;
         }
 
-        /* Status badges */
-        .status-badge {
+        /* Status badges - Exact colors */
+        .status-pending { 
+            background: #ff4444; 
+            color: white; 
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .status-transit { 
+            background: #3498db; 
+            color: white; 
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .status-delivered { 
+            background: #28a745; 
+            color: white; 
             padding: 4px 8px;
             border-radius: 12px;
             font-size: 11px;
@@ -127,1102 +326,559 @@
             display: inline-block;
         }
 
-        .status-pending { background: #fff3cd; color: #856404; }
-        .status-picked { background: #cce5ff; color: #004085; }
-        .status-transit { background: #d1ecf1; color: #0c5460; }
-        .status-arrived { background: #d4edda; color: #155724; }
-        .status-verified { background: #d1e7dd; color: #0a3622; }
-        .status-delivered { background: #28a745; color: white; }
-
-        .excel-export-btn {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            margin-right: 10px;
-        }
-
-        .excel-import-btn {
-            background: #0078d4;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        /* Markets/Locations Grid */
-        .markets-grid {
+        /* Logistics priority sections */
+        .logistics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .market-card {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 15px;
-        }
-
-        .market-card h4 {
-            color: #0078d4;
-            margin-bottom: 10px;
-        }
-
-        /* Delivery Status Section */
-        .delivery-status-panel {
-            background: #f0f7ff;
-            border: 1px solid #cce5ff;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .status-options {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-
-        .status-option {
-            flex: 1;
-            min-width: 150px;
-            background: white;
-            padding: 15px;
-            border-radius: 6px;
-            text-align: center;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.3s;
-        }
-
-        .status-option:hover {
-            border-color: #0078d4;
-        }
-
-        .status-option.selected {
-            border-color: #28a745;
-            background: #f0fff0;
-        }
-
-        /* Pickup location search */
-        .location-search {
-            margin-bottom: 20px;
-        }
-
-        .location-search input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-
-        /* Verification Section */
-        .verification-panel {
-            background: #f0f7ff;
-            border: 1px solid #cce5ff;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .verification-options {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .verif-option {
-            flex: 1;
-            min-width: 200px;
-            background: white;
-            padding: 15px;
-            border-radius: 6px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .verif-option:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,120,212,0.2);
-        }
-
-        .badge-success {
-            background: #28a745;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            margin-left: 5px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- Excel-style Tabs -->
-        <div class="excel-tabs">
-            <button class="excel-tab active" onclick="switchSheet('faulty')">📋 Faulty_Dispatch</button>
-            <button class="excel-tab" onclick="switchSheet('markets')">📍 Markets_List</button>
-            <button class="excel-tab" onclick="switchSheet('logistics')">🚚 Logistics Companies</button>
-            <button class="excel-tab" onclick="switchSheet('centers')">🏢 Delivery Centers</button>
-        </div>
-
-        <!-- Faulty Dispatch Sheet (Active by default) -->
-        <div id="faulty-sheet" class="sheet-content">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2>📋 Faulty Device Dispatch Tracking</h2>
-                <div>
-                    <button class="excel-export-btn" onclick="exportToExcel()">⬇️ Export to Excel</button>
-                    <button class="excel-import-btn" onclick="importFromExcel()">📤 Import from Excel</button>
-                </div>
-            </div>
-
-            <!-- Add New Dispatch Form - Updated -->
-            <h3 style="margin-bottom: 15px;">➕ Add New Return Request</h3>
-            <div class="dispatch-form">
-                <div class="form-group">
-                    <label>Date of Request</label>
-                    <input type="date" id="requestDate" value="2026-03-19">
-                </div>
-                <div class="form-group">
-                    <label>Merchant Name</label>
-                    <input type="text" id="merchantName" placeholder="Full name">
-                </div>
-                <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="tel" id="phone" placeholder="e.g., 08012345678">
-                </div>
-                <div class="form-group">
-                    <label>Market/Area</label>
-                    <select id="market">
-                        <option>Lagos Island</option>
-                        <option>Ikeja</option>
-                        <option>Ibadan</option>
-                        <option>Kano</option>
-                        <option>Port Harcourt</option>
-                        <option>Abuja</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Device Type</label>
-                    <select id="deviceType">
-                        <option>OPay POS G3</option>
-                        <option>OPay POS G3 Pro</option>
-                        <option>OPay POS E2</option>
-                        <option>PAX A80</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Fault Type</label>
-                    <select id="faultType">
-                        <option>Hardware</option>
-                        <option>Software</option>
-                        <option>Battery</option>
-                        <option>Network</option>
-                        <option>Printer</option>
-                        <option>Screen</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Assigned Logistics Company</label>
-                    <select id="logisticsCompany">
-                        <option>Red Star Express</option>
-                        <option>DHL Nigeria</option>
-                        <option>GIG Logistics</option>
-                        <option>UPS Nigeria</option>
-                        <option>FedEx Nigeria</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Pickup Location</label>
-                    <input type="text" id="pickupLocation" placeholder="Exact pickup point/landmark">
-                </div>
-                <div class="form-group">
-                    <label>Pickup Address</label>
-                    <textarea id="pickupAddress" rows="2" placeholder="Full pickup address"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Pickup Date</label>
-                    <input type="date" id="pickupDate">
-                </div>
-                <div class="form-group">
-                    <label>Pickup Time Slot</label>
-                    <select id="pickupTime">
-                        <option>Morning (9am-12pm)</option>
-                        <option>Afternoon (12pm-3pm)</option>
-                        <option>Evening (3pm-6pm)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Destination Center</label>
-                    <select id="destinationCenter">
-                        <option>Lagos HQ - Ikeja</option>
-                        <option>Abuja Service Center</option>
-                        <option>Port Harcourt Office</option>
-                        <option>Ibadan Branch</option>
-                        <option>Kano Depot</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Delivery Status</label>
-                    <select id="deliveryStatus">
-                        <option>Pending Pickup</option>
-                        <option>Picked Up</option>
-                        <option>In Transit</option>
-                        <option>Arrived at Center</option>
-                        <option>Out for Delivery</option>
-                        <option>Delivered</option>
-                        <option>Verified</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Tracking ID</label>
-                    <input type="text" id="trackingId" placeholder="Auto-generated" readonly value="OPF-2403-045">
-                </div>
-                <div class="form-group">
-                    <label></label>
-                    <button style="background: #0078d4; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: 600; cursor: pointer;">➕ Add to Tracking</button>
-                </div>
-            </div>
-
-            <!-- Pickup Location Search -->
-            <div class="location-search">
-                <input type="text" placeholder="🔍 Search by pickup location, merchant name, or tracking ID...">
-            </div>
-
-            <!-- Data Table - Updated with new columns -->
-            <h3 style="margin: 30px 0 15px;">📊 Current Returns</h3>
-            <div style="overflow-x: auto;">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Tracking ID</th>
-                            <th>Merchant Name</th>
-                            <th>Phone</th>
-                            <th>Device Type</th>
-                            <th>Fault Type</th>
-                            <th>Logistics</th>
-                            <th>Pickup Location</th>
-                            <th>Pickup Address</th>
-                            <th>Destination</th>
-                            <th>Delivery Status</th>
-                            <th>Last Update</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>2026-03-19</td>
-                            <td><strong>OPF-2403-001</strong></td>
-                            <td>John Okafor</td>
-                            <td>08012345678</td>
-                            <td>OPay POS G3</td>
-                            <td>Battery</td>
-                            <td>Red Star</td>
-                            <td>Shop R12, Alaba Market <span class="badge-success">📍</span></td>
-                            <td>15 Alhaji St, Ikeja</td>
-                            <td>Lagos HQ</td>
-                            <td><span class="status-badge status-transit">In Transit</span></td>
-                            <td>10:30 AM, 19 Mar</td>
-                            <td>
-                                <button style="background: #0078d4; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Track</button>
-                                <button style="background: #28a745; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Update</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2026-03-18</td>
-                            <td><strong>OPF-2403-002</strong></td>
-                            <td>Blessing Etim</td>
-                            <td>08098765432</td>
-                            <td>PAX A80</td>
-                            <td>Screen</td>
-                            <td>GIG Logistics</td>
-                            <td>Shop 5, Marian Market <span class="badge-success">📍</span></td>
-                            <td>22 Uyo St, Calabar</td>
-                            <td>Port Harcourt</td>
-                            <td><span class="status-badge status-arrived">Arrived at Center</span></td>
-                            <td>9:15 AM, 18 Mar</td>
-                            <td>
-                                <button style="background: #0078d4; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Track</button>
-                                <button style="background: #28a745; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Update</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2026-03-17</td>
-                            <td><strong>OPF-2403-003</strong></td>
-                            <td>Musa Abubakar</td>
-                            <td>07012345678</td>
-                            <td>OPay POS G3 Pro</td>
-                            <td>Network</td>
-                            <td>DHL</td>
-                            <td>Kurmi Market <span class="badge-success">📍</span></td>
-                            <td>15 Ahmadu Bello Way, Kano</td>
-                            <td>Kano Depot</td>
-                            <td><span class="status-badge status-delivered">Delivered</span></td>
-                            <td>2:30 PM, 17 Mar</td>
-                            <td>
-                                <button style="background: #0078d4; color: white; border: none; padding: 4px 8px; border-radius: 4px;">View</button>
-                                <button style="background: #28a745; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Verify</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2026-03-16</td>
-                            <td><strong>OPF-2403-004</strong></td>
-                            <td>Chidi Okonkwo</td>
-                            <td>09012345678</td>
-                            <td>OPay POS E2</td>
-                            <td>Printer</td>
-                            <td>UPS</td>
-                            <td>Shop 23, Ogbete Market <span class="badge-success">📍</span></td>
-                            <td>45 Ogui Rd, Enugu</td>
-                            <td>Port Harcourt</td>
-                            <td><span class="status-badge status-picked">Picked Up</span></td>
-                            <td>11:45 AM, 16 Mar</td>
-                            <td>
-                                <button style="background: #0078d4; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Track</button>
-                                <button style="background: #28a745; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Update</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Quick Delivery Status Update -->
-            <div class="delivery-status-panel">
-                <h3 style="margin-bottom: 10px;">📦 Quick Delivery Status Update</h3>
-                <p style="color: #666; margin-bottom: 15px;">Select tracking ID and update delivery status</p>
-                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <select style="padding: 10px; border: 1px solid #ddd; border-radius: 6px; min-width: 200px;">
-                        <option>OPF-2403-001 - John Okafor</option>
-                        <option>OPF-2403-002 - Blessing Etim</option>
-                        <option>OPF-2403-003 - Musa Abubakar</option>
-                        <option>OPF-2403-004 - Chidi Okonkwo</option>
-                    </select>
-                    <select style="padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
-                        <option>Pending Pickup</option>
-                        <option>Picked Up</option>
-                        <option>In Transit</option>
-                        <option>Arrived at Center</option>
-                        <option>Out for Delivery</option>
-                        <option>Delivered</option>
-                        <option>Verified</option>
-                    </select>
-                    <button style="background: #0078d4; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">Update Status</button>
-                </div>
-            </div>
-
-            <!-- Delivery Verification Section (Enhanced) -->
-            <div class="verification-panel">
-                <h3 style="margin-bottom: 15px;">✅ Delivery Verification (Prevent Loss)</h3>
-                <div class="verification-options">
-                    <div class="verif-option" onclick="verifyPhoto()">
-                        <div style="font-size: 30px;">📸</div>
-                        <strong>Photo Proof</strong>
-                        <p style="font-size: 12px; color: #666; margin-top: 5px;">Take photo at delivery location</p>
-                    </div>
-                    <div class="verif-option" onclick="verifyGPS()">
-                        <div style="font-size: 30px;">📍</div>
-                        <strong>GPS Check</strong>
-                        <p style="font-size: 12px; color: #666; margin-top: 5px;">Verify delivery coordinates</p>
-                    </div>
-                    <div class="verif-option" onclick="verifyOTP()">
-                        <div style="font-size: 30px;">🔢</div>
-                        <strong>OTP Entry</strong>
-                        <p style="font-size: 12px; color: #666; margin-top: 5px;">Enter 4-digit verification code</p>
-                    </div>
-                    <div class="verif-option" onclick="markDelivered()">
-                        <div style="font-size: 30px;">✅</div>
-                        <strong>Mark Delivered</strong>
-                        <p style="font-size: 12px; color: #666; margin-top: 5px;">Confirm final delivery</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Markets_List Sheet (hidden by default) -->
-        <div id="markets-sheet" class="sheet-content" style="display: none;">
-            <h2>📍 Markets & Territories</h2>
-            <div style="margin: 20px 0;">
-                <input type="text" placeholder="Search markets..." style="padding: 10px; width: 300px; border: 1px solid #ddd; border-radius: 4px;">
-            </div>
-            <div class="markets-grid">
-                <div class="market-card">
-                    <h4>Lagos Island</h4>
-                    <p>📍 Key locations: Balogun, Idumota, Marina</p>
-                    <p>👥 Merchants: 124,500</p>
-                    <p>📦 Active Returns: 45</p>
-                </div>
-                <div class="market-card">
-                    <h4>Ikeja</h4>
-                    <p>📍 Key locations: Computer Village, Oregun, Alausa</p>
-                    <p>👥 Merchants: 98,200</p>
-                    <p>📦 Active Returns: 32</p>
-                </div>
-                <div class="market-card">
-                    <h4>Ibadan</h4>
-                    <p>📍 Key locations: Bodija, Dugbe, Sango</p>
-                    <p>👥 Merchants: 67,800</p>
-                    <p>📦 Active Returns: 28</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Switch between Excel-like tabs
-        function switchSheet(sheetName) {
-            // Hide all sheets
-            document.getElementById('faulty-sheet').style.display = 'none';
-            document.getElementById('markets-sheet').style.display = 'none';
-            
-            // Show selected sheet
-            if(sheetName === 'faulty') {
-                document.getElementById('faulty-sheet').style.display = 'block';
-            } else if(sheetName === 'markets') {
-                document.getElementById('markets-sheet').style.display = 'block';
-            }
-            
-            // Update active tab
-            document.querySelectorAll('.excel-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            event.target.classList.add('active');
-        }
-
-        // Export to Excel
-        function exportToExcel() {
-            alert('Downloading Faulty_Dispatch data as Excel file...\nThis includes: Date, Tracking ID, Merchant Name, Phone, Device Type, Fault Type, Logistics, Pickup Location, Pickup Address, Destination, Delivery Status');
-        }
-
-        // Import from Excel
-        function importFromExcel() {
-            alert('Opening file picker to upload Excel file...\nThis will sync with your tracking system.');
-        }
-
-        // Verification functions
-        function verifyPhoto() {
-            alert('📸 Camera opened. Take photo of delivered device at the pickup/delivery location.');
-        }
-
-        function verifyGPS() {
-            alert('📍 GPS verification: Current location captured. Coordinates saved for delivery confirmation.');
-        }
-
-        function verifyOTP() {
-            let otp = prompt('Enter 4-digit verification OTP:');
-            if(otp && otp.length === 4) {
-                alert('✅ OTP verified! Delivery confirmed and recorded.');
-            }
-        }
-
-        function markDelivered() {
-            if(confirm('Mark this device as delivered? This will update the delivery status.')) {
-                alert('✅ Status updated to DELIVERED');
-            }
-        }
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OPay Faulty Device Tracking</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-        }
-
-        body {
-            background: #f5f6fa;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* Header with Excel-style tabs */
-        .excel-tabs {
-            display: flex;
-            gap: 2px;
-            background: #e0e0e0;
-            padding: 5px 5px 0 5px;
-            border-radius: 8px 8px 0 0;
-            overflow-x: auto;
-        }
-
-        .excel-tab {
-            padding: 10px 25px;
-            background: #d0d0d0;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-            color: #333;
-            white-space: nowrap;
-        }
-
-        .excel-tab.active {
-            background: white;
-            color: #0078d4;
-            border-bottom: 3px solid #0078d4;
-        }
-
-        /* Main content area */
-        .sheet-content {
-            background: white;
-            border-radius: 0 0 8px 8px;
-            padding: 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-
-        /* Faulty Dispatch Form - Updated with new fields */
-        .dispatch-form {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
-            margin-bottom: 30px;
+            margin-top: 20px;
         }
 
-        .form-group {
+        .logistics-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #1a5f7a;
+        }
+
+        .logistics-card.top4 {
+            border-left-color: #ff6b35;
+            background: linear-gradient(to right, #fff5f0, white);
+        }
+
+        .logistics-card h3 {
+            color: #1a5f7a;
+            margin-bottom: 15px;
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
         }
 
-        .form-group label {
-            font-size: 13px;
-            font-weight: 600;
-            color: #444;
-            margin-bottom: 5px;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            padding: 10px 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            border-color: #0078d4;
-            outline: none;
-        }
-
-        /* Table matching your updated structure */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: white;
+            margin-bottom: 8px;
+            border-radius: 5px;
             font-size: 13px;
         }
 
-        .data-table th {
-            background: #f0f2f5;
-            padding: 12px 8px;
-            text-align: left;
-            font-weight: 600;
-            color: #333;
-            border-bottom: 2px solid #ccc;
-            white-space: nowrap;
-        }
-
-        .data-table td {
-            padding: 10px 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .data-table tr:hover {
-            background: #f5f9ff;
-        }
-
-        /* Status badges */
-        .status-badge {
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
-            display: inline-block;
-        }
-
-        .status-pending { background: #fff3cd; color: #856404; }
-        .status-picked { background: #cce5ff; color: #004085; }
-        .status-transit { background: #d1ecf1; color: #0c5460; }
-        .status-arrived { background: #d4edda; color: #155724; }
-        .status-verified { background: #d1e7dd; color: #0a3622; }
-        .status-delivered { background: #28a745; color: white; }
-
-        .excel-export-btn {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            margin-right: 10px;
-        }
-
-        .excel-import-btn {
-            background: #0078d4;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        /* Markets/Locations Grid */
+        /* Markets grid */
         .markets-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 15px;
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 10px;
         }
 
-        .market-card {
+        .market-item {
             background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 15px;
-        }
-
-        .market-card h4 {
-            color: #0078d4;
-            margin-bottom: 10px;
-        }
-
-        /* Delivery Status Section */
-        .delivery-status-panel {
-            background: #f0f7ff;
-            border: 1px solid #cce5ff;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .status-options {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-
-        .status-option {
-            flex: 1;
-            min-width: 150px;
-            background: white;
-            padding: 15px;
-            border-radius: 6px;
-            text-align: center;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.3s;
-        }
-
-        .status-option:hover {
-            border-color: #0078d4;
-        }
-
-        .status-option.selected {
-            border-color: #28a745;
-            background: #f0fff0;
-        }
-
-        /* Pickup location search */
-        .location-search {
-            margin-bottom: 20px;
-        }
-
-        .location-search input {
-            width: 100%;
             padding: 12px;
-            border: 1px solid #ddd;
             border-radius: 6px;
+            border-left: 3px solid #1a5f7a;
+            font-size: 13px;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: white;
             font-size: 14px;
         }
 
-        /* Verification Section */
-        .verification-panel {
-            background: #f0f7ff;
-            border: 1px solid #cce5ff;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .verification-options {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .verif-option {
-            flex: 1;
-            min-width: 200px;
-            background: white;
-            padding: 15px;
-            border-radius: 6px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .verif-option:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,120,212,0.2);
-        }
-
-        .badge-success {
-            background: #28a745;
+        .btn-primary {
+            background: #1a5f7a;
             color: white;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            margin-left: 5px;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-warning {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Excel-style Tabs -->
-        <div class="excel-tabs">
-            <button class="excel-tab active" onclick="switchSheet('faulty')">📋 Faulty_Dispatch</button>
-            <button class="excel-tab" onclick="switchSheet('markets')">📍 Markets_List</button>
-            <button class="excel-tab" onclick="switchSheet('logistics')">🚚 Logistics Companies</button>
-            <button class="excel-tab" onclick="switchSheet('centers')">🏢 Delivery Centers</button>
+        <!-- Website Header -->
+        <div class="website-header">
+            <div class="website-title">
+                <h1>🔧 Opay Faulty Device Tracking System</h1>
+                <div class="subtitle">Motherwarehouse-ng • Real-time Logistics Dashboard</div>
+            </div>
+            <div class="website-url">
+                <span>gifted-g.github.io/Opay-Faulty-Device-Tracking-System/</span> Motherwarehouse-ng
+            </div>
         </div>
 
-        <!-- Faulty Dispatch Sheet (Active by default) -->
-        <div id="faulty-sheet" class="sheet-content">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2>📋 Faulty Device Dispatch Tracking</h2>
+        <!-- Excel-style Tabs -->
+        <div class="excel-tabs">
+            <button class="excel-tab active" onclick="switchSheet('motherwarehouse')">🏭 MOTHERWAREHOUSE</button>
+            <button class="excel-tab" onclick="switchSheet('faulty')">📋 Faulty_Dispatch</button>
+            <button class="excel-tab" onclick="switchSheet('markets')">📍 Markets_List</button>
+            <button class="excel-tab" onclick="switchSheet('logistics')">🚚 Logistics_Companies</button>
+            <button class="excel-tab" onclick="switchSheet('centers')">🏢 Delivery_Centers</button>
+        </div>
+
+        <!-- MOTHERWAREHOUSE DASHBOARD -->
+        <div id="motherwarehouse-sheet" class="sheet-content">
+            <div class="dashboard-header">
+                <h2>🏭 MOTHER WAREHOUSE COMMAND CENTER</h2>
+                <span class="live-badge">🔴 LIVE • Real-time Updates</span>
+            </div>
+
+            <!-- Vendor Login Section - Individual logins for logistics companies -->
+            <div class="vendor-login-panel">
                 <div>
-                    <button class="excel-export-btn" onclick="exportToExcel()">⬇️ Export to Excel</button>
-                    <button class="excel-import-btn" onclick="importFromExcel()">📤 Import from Excel</button>
+                    <h3 style="margin-bottom: 5px;">🔐 Logistics Partner Login</h3>
+                    <p style="opacity: 0.9;">Select your company to view assigned tasks</p>
+                </div>
+                <div class="vendor-selector">
+                    <select id="vendorSelect" onchange="vendorLogin()">
+                        <option value="">-- Select Logistics Company --</option>
+                        <option value="gwX">Gwx</option>
+                        <option value="dellyman">Dellyman</option>
+                        <option value="greaterwashington">GREATER WASHINGTON CAPITAL LTD</option>
+                        <option value="fedex">FedEx</option>
+                        <option value="self">TRANSPORTED BY MYSELF</option>
+                        <option value="shineforever">From shine forever</option>
+                        <option value="greenbusiness">Green business solutions</option>
+                        <option value="alexander">Alexander house</option>
+                        <option value="lyte">lyte shipping limited</option>
+                        <option value="hart">hart logistics</option>
+                        <option value="hollytrans">hollytrans</option>
+                        <option value="inbound">Inbound Logistics</option>
+                        <option value="pythagoras">Pythagoras Logistics</option>
+                        <option value="victor">Victor Express Logistics</option>
+                        <option value="pythagoras2">Pythagoras Logistics and Haulage Enterprise</option>
+                        <option value="shineforever2">Shine forever</option>
+                    </select>
+                    <button class="vendor-login-btn" onclick="vendorLogin()">Login →</button>
                 </div>
             </div>
 
-            <!-- Add New Dispatch Form - Updated -->
+            <!-- Key Metrics -->
+            <div class="dashboard-grid">
+                <div class="dashboard-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <h3>Total Active Returns</h3>
+                    <div class="number">1,847</div>
+                    <div>↑ 12% from yesterday</div>
+                </div>
+                <div class="dashboard-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <h3>In Transit Today</h3>
+                    <div class="number">423</div>
+                    <div>156 arriving at warehouse</div>
+                </div>
+                <div class="dashboard-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <h3>Pending Verification</h3>
+                    <div class="number">89</div>
+                    <div>At mother warehouse</div>
+                </div>
+                <div class="dashboard-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                    <h3>Completed (This Week)</h3>
+                    <div class="number">2,345</div>
+                    <div>98.3% success rate</div>
+                </div>
+            </div>
+
+            <!-- LIVE FEED - Shows all activities -->
+            <div class="live-feed">
+                <h3 style="color: #1a5f7a; margin-bottom: 15px;">📡 LIVE WAREHOUSE FEED</h3>
+                <div class="feed-item">
+                    <div class="feed-time">2 min ago</div>
+                    <div class="feed-content">
+                        <div class="feed-title">📍 OPF-2403-001 - Gwx - From: Abia-Aba-ARIARIA INTL 1 MARKET</div>
+                        <div>Merchant: John Okafor • 5 cartons • 20 pieces</div>
+                    </div>
+                    <span class="feed-badge badge-red">PENDING PICKUP</span>
+                </div>
+                <div class="feed-item">
+                    <div class="feed-time">15 min ago</div>
+                    <div class="feed-content">
+                        <div class="feed-title">✅ OPF-2403-045 - FedEx - From: Lagos Island</div>
+                        <div>Delivered to Lagos HQ • 3 cartons • 12 pieces</div>
+                    </div>
+                    <span class="feed-badge badge-green">DELIVERED</span>
+                </div>
+                <div class="feed-item">
+                    <div class="feed-time">32 min ago</div>
+                    <div class="feed-content">
+                        <div class="feed-title">🚚 OPF-2403-089 - Dellyman - From: Ibadan</div>
+                        <div>In transit • 2 cartons • 8 pieces • ETA: 2 hours</div>
+                    </div>
+                    <span class="feed-badge badge-blue">IN TRANSIT</span>
+                </div>
+            </div>
+
+            <!-- Vendor-specific task views (example) -->
+            <h3 style="color: #1a5f7a; margin: 25px 0 15px;">🚚 Logistics Partner Task Boards</h3>
+            <div class="logistics-grid">
+                <!-- Top 4 Logistics Companies -->
+                <div class="logistics-card top4">
+                    <h3>🏆 Gwx <span style="color: #ff6b35;">TOP 4</span></h3>
+                    <div class="task-item">
+                        <span>OPF-2403-001</span>
+                        <span>Abia-Aba-ARIARIA INTL 1 MARKET</span>
+                        <span class="status-pending">PENDING</span>
+                    </div>
+                    <div class="task-item">
+                        <span>OPF-2403-002</span>
+                        <span>Lagos Island</span>
+                        <span class="status-pending">PENDING</span>
+                    </div>
+                    <button class="btn-primary" style="width: 100%; margin-top: 10px;" onclick="updateStatus('gwX')">Update Status →</button>
+                </div>
+
+                <div class="logistics-card top4">
+                    <h3>🏆 Dellyman <span style="color: #ff6b35;">TOP 4</span></h3>
+                    <div class="task-item">
+                        <span>OPF-2403-089</span>
+                        <span>Ibadan</span>
+                        <span class="status-transit">IN TRANSIT</span>
+                    </div>
+                    <div class="task-item">
+                        <span>OPF-2403-090</span>
+                        <span>Kano</span>
+                        <span class="status-pending">PENDING</span>
+                    </div>
+                    <button class="btn-primary" style="width: 100%; margin-top: 10px;" onclick="updateStatus('dellyman')">Update Status →</button>
+                </div>
+
+                <div class="logistics-card top4">
+                    <h3>🏆 GREATER WASHINGTON CAPITAL LTD <span style="color: #ff6b35;">TOP 4</span></h3>
+                    <div class="task-item">
+                        <span>OPF-2403-156</span>
+                        <span>Abuja</span>
+                        <span class="status-transit">IN TRANSIT</span>
+                    </div>
+                    <button class="btn-primary" style="width: 100%; margin-top: 10px;" onclick="updateStatus('greaterwashington')">Update Status →</button>
+                </div>
+
+                <div class="logistics-card top4">
+                    <h3>🏆 FedEx <span style="color: #ff6b35;">TOP 4</span></h3>
+                    <div class="task-item">
+                        <span>OPF-2403-045</span>
+                        <span>Lagos Island</span>
+                        <span class="status-delivered">DELIVERED</span>
+                    </div>
+                    <button class="btn-primary" style="width: 100%; margin-top: 10px;" onclick="updateStatus('fedex')">Update Status →</button>
+                </div>
+
+                <!-- Other Logistics Companies -->
+                <div class="logistics-card">
+                    <h3>📦 Other Partners</h3>
+                    <div class="task-item">
+                        <span>Pythagoras Logistics</span>
+                        <span>3 tasks</span>
+                    </div>
+                    <div class="task-item">
+                        <span>Victor Express</span>
+                        <span>2 tasks</span>
+                    </div>
+                    <div class="task-item">
+                        <span>hart logistics</span>
+                        <span>1 task</span>
+                    </div>
+                    <div class="task-item">
+                        <span>lyte shipping</span>
+                        <span>2 tasks</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Faulty Dispatch Sheet - EXACT database columns -->
+        <div id="faulty-sheet" class="sheet-content" style="display: none;">
+            <div class="dashboard-header">
+                <h2>📋 Faulty Device Dispatch</h2>
+                <div>
+                    <button class="btn-primary" onclick="exportToExcel()">⬇️ Export to Excel</button>
+                </div>
+            </div>
+
+            <!-- Add New Dispatch Form -->
             <h3 style="margin-bottom: 15px;">➕ Add New Return Request</h3>
             <div class="dispatch-form">
                 <div class="form-group">
-                    <label>Date of Request</label>
-                    <input type="date" id="requestDate" value="2026-03-19">
+                    <label>Tracking ID</label>
+                    <input type="text" value="OPF-2403-045" readonly>
                 </div>
                 <div class="form-group">
-                    <label>Merchant Name</label>
-                    <input type="text" id="merchantName" placeholder="Full name">
-                </div>
-                <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="tel" id="phone" placeholder="e.g., 08012345678">
-                </div>
-                <div class="form-group">
-                    <label>Market/Area</label>
-                    <select id="market">
-                        <option>Lagos Island</option>
-                        <option>Ikeja</option>
-                        <option>Ibadan</option>
-                        <option>Kano</option>
-                        <option>Port Harcourt</option>
-                        <option>Abuja</option>
+                    <label>Market Or City *</label>
+                    <select required>
+                        <option value="">Select Market</option>
+                        <option>ABIA-Aba-ARIARIA INTL 1 MARKET</option>
+                        <option>ABIA-Aba-Ahiankwo Abayi market</option>
+                        <option>ABIA-Aba-Alaorji Spare parts Market Asannetu</option>
+                        <option>ABIA-Aba-Ariaria International Market 2</option>
+                        <option>ABIA-Aba-CEMENTERY MARKET</option>
+                        <option>ABIA-Aba-Ekeoha center Market</option>
+                        <option>ABIA-Aba-New Market</option>
+                        <option>ABIA-Aba-Osisioma Market</option>
+                        <option>ABIA-Umuahia-Isi Gate Market</option>
+                        <option>ADAMAWA-Mubi Market</option>
+                        <option>ADAMAWA-Mubi Tikke International Cow market</option>
+                        <option>ADAMAWA-Yola-Hong main Market</option>
+                        <option>AKWA IBOM-EKET Market</option>
+                        <option>AKWA IBOM-Uyo-AKPAN ANDEM Market</option>
+                        <option>AKWA IBOM-Uyo-Itam Market</option>
+                        <option>AKWA IBOM-Oron Market</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Device Type</label>
-                    <select id="deviceType">
-                        <option>OPay POS G3</option>
-                        <option>OPay POS G3 Pro</option>
-                        <option>OPay POS E2</option>
-                        <option>PAX A80</option>
-                    </select>
+                    <label>Pick up Location</label>
+                    <input type="text" placeholder="Exact pickup point">
                 </div>
                 <div class="form-group">
-                    <label>Fault Type</label>
-                    <select id="faultType">
-                        <option>Hardware</option>
-                        <option>Software</option>
-                        <option>Battery</option>
-                        <option>Network</option>
-                        <option>Printer</option>
-                        <option>Screen</option>
-                    </select>
+                    <label>Delivery Location</label>
+                    <input type="text" placeholder="Destination address" value="Lagos HQ - Ikeja">
                 </div>
                 <div class="form-group">
-                    <label>Assigned Logistics Company</label>
-                    <select id="logisticsCompany">
-                        <option>Red Star Express</option>
-                        <option>DHL Nigeria</option>
-                        <option>GIG Logistics</option>
-                        <option>UPS Nigeria</option>
-                        <option>FedEx Nigeria</option>
-                    </select>
+                    <label>Number of Cartoon</label>
+                    <input type="number" placeholder="e.g., 5">
                 </div>
                 <div class="form-group">
-                    <label>Pickup Location</label>
-                    <input type="text" id="pickupLocation" placeholder="Exact pickup point/landmark">
-                </div>
-                <div class="form-group">
-                    <label>Pickup Address</label>
-                    <textarea id="pickupAddress" rows="2" placeholder="Full pickup address"></textarea>
+                    <label>Quantity in pieces</label>
+                    <input type="number" placeholder="e.g., 20">
                 </div>
                 <div class="form-group">
                     <label>Pickup Date</label>
-                    <input type="date" id="pickupDate">
+                    <input type="date" value="2026-03-19">
                 </div>
                 <div class="form-group">
-                    <label>Pickup Time Slot</label>
-                    <select id="pickupTime">
-                        <option>Morning (9am-12pm)</option>
-                        <option>Afternoon (12pm-3pm)</option>
-                        <option>Evening (3pm-6pm)</option>
+                    <label>Logistics Company *</label>
+                    <select required>
+                        <option value="">Select Logistics</option>
+                        <option>Gwx</option>
+                        <option>Dellyman</option>
+                        <option>GREATER WASHINGTON CAPITAL LTD</option>
+                        <option>FedEx</option>
+                        <option>TRANSPORTED BY MYSELF</option>
+                        <option>From shine forever</option>
+                        <option>Green business solutions</option>
+                        <option>Alexander house</option>
+                        <option>lyte shipping limited</option>
+                        <option>hart logistics</option>
+                        <option>hollytrans</option>
+                        <option>Inbound Logistics</option>
+                        <option>Pythagoras Logistics</option>
+                        <option>Victor Express Logistics</option>
+                        <option>Pythagoras Logistics and Haulage Enterprise</option>
+                        <option>Shine forever</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Destination Center</label>
-                    <select id="destinationCenter">
-                        <option>Lagos HQ - Ikeja</option>
-                        <option>Abuja Service Center</option>
-                        <option>Port Harcourt Office</option>
-                        <option>Ibadan Branch</option>
-                        <option>Kano Depot</option>
+                    <label>Delivery Date</label>
+                    <input type="date">
+                </div>
+                <div class="form-group">
+                    <label>Status *</label>
+                    <select required>
+                        <option value="pending">Pending Pickup (Red)</option>
+                        <option value="transit">In Transit (Blue)</option>
+                        <option value="delivered">Delivered (Green)</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Delivery Status</label>
-                    <select id="deliveryStatus">
-                        <option>Pending Pickup</option>
-                        <option>Picked Up</option>
-                        <option>In Transit</option>
-                        <option>Arrived at Center</option>
-                        <option>Out for Delivery</option>
-                        <option>Delivered</option>
-                        <option>Verified</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Tracking ID</label>
-                    <input type="text" id="trackingId" placeholder="Auto-generated" readonly value="OPF-2403-045">
+                    <label>Form Type</label>
+                    <input type="text" value="Return Request">
                 </div>
                 <div class="form-group">
                     <label></label>
-                    <button style="background: #0078d4; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: 600; cursor: pointer;">➕ Add to Tracking</button>
+                    <button class="btn-warning" style="width: 100%;">➕ Add to Tracking</button>
                 </div>
             </div>
 
-            <!-- Pickup Location Search -->
-            <div class="location-search">
-                <input type="text" placeholder="🔍 Search by pickup location, merchant name, or tracking ID...">
-            </div>
-
-            <!-- Data Table - Updated with new columns -->
+            <!-- Data Table - EXACT columns as database -->
             <h3 style="margin: 30px 0 15px;">📊 Current Returns</h3>
             <div style="overflow-x: auto;">
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Date</th>
                             <th>Tracking ID</th>
-                            <th>Merchant Name</th>
-                            <th>Phone</th>
-                            <th>Device Type</th>
-                            <th>Fault Type</th>
-                            <th>Logistics</th>
-                            <th>Pickup Location</th>
-                            <th>Pickup Address</th>
-                            <th>Destination</th>
-                            <th>Delivery Status</th>
-                            <th>Last Update</th>
+                            <th>Market Or City</th>
+                            <th>Pick up Location</th>
+                            <th>Delivery Location</th>
+                            <th>Number of Cartoon</th>
+                            <th>Quantity in pieces</th>
+                            <th>Pickup Date</th>
+                            <th>Logistics Company</th>
+                            <th>Delivery Date</th>
+                            <th>Status</th>
+                            <th>Form Type</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>2026-03-19</td>
                             <td><strong>OPF-2403-001</strong></td>
-                            <td>John Okafor</td>
-                            <td>08012345678</td>
-                            <td>OPay POS G3</td>
-                            <td>Battery</td>
-                            <td>Red Star</td>
-                            <td>Shop R12, Alaba Market <span class="badge-success">📍</span></td>
-                            <td>15 Alhaji St, Ikeja</td>
+                            <td>ABIA-Aba-ARIARIA INTL 1 MARKET</td>
+                            <td>Shop B12, Ariaria</td>
                             <td>Lagos HQ</td>
-                            <td><span class="status-badge status-transit">In Transit</span></td>
-                            <td>10:30 AM, 19 Mar</td>
-                            <td>
-                                <button style="background: #0078d4; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Track</button>
-                                <button style="background: #28a745; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Update</button>
-                            </td>
+                            <td>5</td>
+                            <td>20</td>
+                            <td>2026-03-19</td>
+                            <td>Gwx</td>
+                            <td>-</td>
+                            <td><span class="status-pending">PENDING PICKUP</span></td>
+                            <td>Return Request</td>
+                            <td><button class="btn-primary" style="padding: 4px 8px;">Update</button></td>
                         </tr>
                         <tr>
+                            <td><strong>OPF-2403-045</strong></td>
+                            <td>Lagos Island</td>
+                            <td>Shop 5, Balogun</td>
+                            <td>Lagos HQ</td>
+                            <td>3</td>
+                            <td>12</td>
                             <td>2026-03-18</td>
-                            <td><strong>OPF-2403-002</strong></td>
-                            <td>Blessing Etim</td>
-                            <td>08098765432</td>
-                            <td>PAX A80</td>
-                            <td>Screen</td>
-                            <td>GIG Logistics</td>
-                            <td>Shop 5, Marian Market <span class="badge-success">📍</span></td>
-                            <td>22 Uyo St, Calabar</td>
-                            <td>Port Harcourt</td>
-                            <td><span class="status-badge status-arrived">Arrived at Center</span></td>
-                            <td>9:15 AM, 18 Mar</td>
-                            <td>
-                                <button style="background: #0078d4; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Track</button>
-                                <button style="background: #28a745; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Update</button>
-                            </td>
+                            <td>FedEx</td>
+                            <td>2026-03-19</td>
+                            <td><span class="status-delivered">DELIVERED</span></td>
+                            <td>Return Request</td>
+                            <td><button class="btn-primary" style="padding: 4px 8px;">View</button></td>
                         </tr>
                         <tr>
-                            <td>2026-03-17</td>
-                            <td><strong>OPF-2403-003</strong></td>
-                            <td>Musa Abubakar</td>
-                            <td>07012345678</td>
-                            <td>OPay POS G3 Pro</td>
-                            <td>Network</td>
-                            <td>DHL</td>
-                            <td>Kurmi Market <span class="badge-success">📍</span></td>
-                            <td>15 Ahmadu Bello Way, Kano</td>
-                            <td>Kano Depot</td>
-                            <td><span class="status-badge status-delivered">Delivered</span></td>
-                            <td>2:30 PM, 17 Mar</td>
-                            <td>
-                                <button style="background: #0078d4; color: white; border: none; padding: 4px 8px; border-radius: 4px;">View</button>
-                                <button style="background: #28a745; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Verify</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2026-03-16</td>
-                            <td><strong>OPF-2403-004</strong></td>
-                            <td>Chidi Okonkwo</td>
-                            <td>09012345678</td>
-                            <td>OPay POS E2</td>
-                            <td>Printer</td>
-                            <td>UPS</td>
-                            <td>Shop 23, Ogbete Market <span class="badge-success">📍</span></td>
-                            <td>45 Ogui Rd, Enugu</td>
-                            <td>Port Harcourt</td>
-                            <td><span class="status-badge status-picked">Picked Up</span></td>
-                            <td>11:45 AM, 16 Mar</td>
-                            <td>
-                                <button style="background: #0078d4; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Track</button>
-                                <button style="background: #28a745; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Update</button>
-                            </td>
+                            <td><strong>OPF-2403-089</strong></td>
+                            <td>Ibadan</td>
+                            <td>Shop 12, Bodija</td>
+                            <td>Ibadan Hub</td>
+                            <td>2</td>
+                            <td>8</td>
+                            <td>2026-03-19</td>
+                            <td>Dellyman</td>
+                            <td>-</td>
+                            <td><span class="status-transit">IN TRANSIT</span></td>
+                            <td>Return Request</td>
+                            <td><button class="btn-primary" style="padding: 4px 8px;">Track</button></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+        </div>
 
-            <!-- Quick Delivery Status Update -->
-            <div class="delivery-status-panel">
-                <h3 style="margin-bottom: 10px;">📦 Quick Delivery Status Update</h3>
-                <p style="color: #666; margin-bottom: 15px;">Select tracking ID and update delivery status</p>
-                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <select style="padding: 10px; border: 1px solid #ddd; border-radius: 6px; min-width: 200px;">
-                        <option>OPF-2403-001 - John Okafor</option>
-                        <option>OPF-2403-002 - Blessing Etim</option>
-                        <option>OPF-2403-003 - Musa Abubakar</option>
-                        <option>OPF-2403-004 - Chidi Okonkwo</option>
-                    </select>
-                    <select style="padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
-                        <option>Pending Pickup</option>
-                        <option>Picked Up</option>
-                        <option>In Transit</option>
-                        <option>Arrived at Center</option>
-                        <option>Out for Delivery</option>
-                        <option>Delivered</option>
-                        <option>Verified</option>
-                    </select>
-                    <button style="background: #0078d4; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">Update Status</button>
-                </div>
+        <!-- Markets List Sheet - Complete dropdown options -->
+        <div id="markets-sheet" class="sheet-content" style="display: none;">
+            <h2 style="color: #1a5f7a; margin-bottom: 20px;">📍 Markets List</h2>
+            <div style="margin-bottom: 20px;">
+                <input type="text" placeholder="Search markets..." style="padding: 10px; width: 100%; border: 1px solid #ddd; border-radius: 6px;">
             </div>
+            <div class="markets-grid">
+                <div class="market-item"><strong>ABIA-Aba-ARIARIA INTL 1 MARKET</strong> • Zone: South-East</div>
+                <div class="market-item"><strong>ABIA-Aba-Ahiankwo Abayi market</strong> • Zone: South-East</div>
+                <div class="market-item"><strong>ABIA-Aba-Alaorji Spare parts Market Asannetu</strong> • Zone: South-East</div>
+                <div class="market-item"><strong>ABIA-Aba-Ariaria International Market 2</strong> • Zone: South-East</div>
+                <div class="market-item"><strong>ABIA-Aba-CEMENTERY MARKET</strong> • Zone: South-East</div>
+                <div class="market-item"><strong>ABIA-Aba-Ekeoha center Market</strong> • Zone: South-East</div>
+                <div class="market-item"><strong>ABIA-Aba-New Market</strong> • Zone: South-East</div>
+                <div class="market-item"><strong>ABIA-Aba-Osisioma Market</strong> • Zone: South-East</div>
+                <div class="market-item"><strong>ABIA-Umuahia-Isi Gate Market</strong> • Zone: South-East</div>
+                <div class="market-item"><strong>ADAMAWA-Mubi Market</strong> • Zone: North-East</div>
+                <div class="market-item"><strong>ADAMAWA-Mubi Tikke International Cow market</strong> • Zone: North-East</div>
+                <div class="market-item"><strong>ADAMAWA-Yola-Hong main Market</strong> • Zone: North-East</div>
+                <div class="market-item"><strong>AKWA IBOM-EKET Market</strong> • Zone: South-South</div>
+                <div class="market-item"><strong>AKWA IBOM-Uyo-AKPAN ANDEM Market</strong> • Zone: South-South</div>
+                <div class="market-item"><strong>AKWA IBOM-Uyo-Itam Market</strong> • Zone: South-South</div>
+                <div class="market-item"><strong>AKWA IBOM-Oron Market</strong> • Zone: South-South</div>
+            </div>
+        </div>
 
-            <!-- Delivery Verification Section (Enhanced) -->
-            <div class="verification-panel">
-                <h3 style="margin-bottom: 15px;">✅ Delivery Verification (Prevent Loss)</h3>
-                <div class="verification-options">
-                    <div class="verif-option" onclick="verifyPhoto()">
-                        <div style="font-size: 30px;">📸</div>
-                        <strong>Photo Proof</strong>
-                        <p style="font-size: 12px; color: #666; margin-top: 5px;">Take photo at delivery location</p>
-                    </div>
-                    <div class="verif-option" onclick="verifyGPS()">
-                        <div style="font-size: 30px;">📍</div>
-                        <strong>GPS Check</strong>
-                        <p style="font-size: 12px; color: #666; margin-top: 5px;">Verify delivery coordinates</p>
-                    </div>
-                    <div class="verif-option" onclick="verifyOTP()">
-                        <div style="font-size: 30px;">🔢</div>
-                        <strong>OTP Entry</strong>
-                        <p style="font-size: 12px; color: #666; margin-top: 5px;">Enter 4-digit verification code</p>
-                    </div>
-                    <div class="verif-option" onclick="markDelivered()">
-                        <div style="font-size: 30px;">✅</div>
-                        <strong>Mark Delivered</strong>
-                        <p style="font-size: 12px; color: #666; margin-top: 5px;">Confirm final delivery</p>
-                    </div>
+        <!-- Logistics Companies Sheet -->
+        <div id="logistics-sheet" class="sheet-content" style="display: none;">
+            <h2 style="color: #1a5f7a; margin-bottom: 20px;">🚚 Logistics Companies</h2>
+            <div class="logistics-grid">
+                <div class="logistics-card top4">
+                    <h3>🏆 TOP 4 PARTNERS</h3>
+                    <div class="task-item">Gwx • Active tasks: 12</div>
+                    <div class="task-item">Dellyman • Active tasks: 8</div>
+                    <div class="task-item">GREATER WASHINGTON CAPITAL LTD • Active tasks: 5</div>
+                    <div class="task-item">FedEx • Active tasks: 7</div>
+                </div>
+                <div class="logistics-card">
+                    <h3>📦 OTHER PARTNERS</h3>
+                    <div class="task-item">TRANSPORTED BY MYSELF • Active: 2</div>
+                    <div class="task-item">From shine forever • Active: 1</div>
+                    <div class="task-item">Green business solutions • Active: 3</div>
+                    <div class="task-item">Alexander house • Active: 1</div>
+                    <div class="task-item">lyte shipping limited • Active: 2</div>
+                    <div class="task-item">hart logistics • Active: 4</div>
+                    <div class="task-item">hollytrans • Active: 2</div>
+                    <div class="task-item">Inbound Logistics • Active: 3</div>
+                    <div class="task-item">Pythagoras Logistics • Active: 5</div>
+                    <div class="task-item">Victor Express Logistics • Active: 2</div>
+                    <div class="task-item">Pythagoras Logistics and Haulage Enterprise • Active: 3</div>
+                    <div class="task-item">Shine forever • Active: 1</div>
                 </div>
             </div>
         </div>
 
-        <!-- Markets_List Sheet (hidden by default) -->
-        <div id="markets-sheet" class="sheet-content" style="display: none;">
-            <h2>📍 Markets & Territories</h2>
-            <div style="margin: 20px 0;">
-                <input type="text" placeholder="Search markets..." style="padding: 10px; width: 300px; border: 1px solid #ddd; border-radius: 4px;">
+        <!-- Delivery Centers Sheet -->
+        <div id="centers-sheet" class="sheet-content" style="display: none;">
+            <h2 style="color: #1a5f7a; margin-bottom: 20px;">🏢 Delivery Centers</h2>
+            <div class="centers-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+                <div class="logistics-card">
+                    <h3>Lagos HQ - Ikeja</h3>
+                    <p>📍 23 Warehouse Road, Ikeja</p>
+                    <p>📞 01-2345678</p>
+                    <p>📦 Capacity: 5,000 units</p>
+                </div>
+                <div class="logistics-card">
+                    <h3>Abuja Service Center</h3>
+                    <p>📍 Plot 45, Central Business District</p>
+                    <p>📞 09-8765432</p>
+                    <p>📦 Capacity: 3,200 units</p>
+                </div>
+                <div class="logistics-card">
+                    <h3>Port Harcourt Office</h3>
+                    <p>📍 12 Trans-Amadi Layout</p>
+                    <p>📞 084-123456</p>
+                    <p>📦 Capacity: 2,800 units</p>
+                </div>
+                <div class="logistics-card">
+                    <h3>Ibadan Branch</h3>
+                    <p>📍 45 Dugbe Road</p>
+                    <p>📞 02-3456789</p>
+                    <p>📦 Capacity: 2,100 units</p>
+                </div>
+                <div class="logistics-card">
+                    <h3>Kano Depot</h3>
+                    <p>📍 78 Bello Road</p>
+                    <p>📞 064-234567</p>
+                    <p>📦 Capacity: 1,800 units</p>
+                </div>
             </div>
-            <div class="markets-grid">
-                <div class="market-card">
-                    <h4>Lagos Island</h4>
-                    <p>📍 Key locations: Balogun, Idumota, Marina</p>
-                    <p>👥 Merchants: 124,500</p>
-                    <p>📦 Active Returns: 45</p>
-                </div>
-                <div class="market-card">
-                    <h4>Ikeja</h4>
-                    <p>📍 Key locations: Computer Village, Oregun, Alausa</p>
-                    <p>👥 Merchants: 98,200</p>
-                    <p>📦 Active Returns: 32</p>
-                </div>
-                <div class="market-card">
-                    <h4>Ibadan</h4>
-                    <p>📍 Key locations: Bodija, Dugbe, Sango</p>
-                    <p>👥 Merchants: 67,800</p>
-                    <p>📦 Active Returns: 28</p>
-                </div>
-            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-note">
+            <p>© 2026 Opay Faulty Device Tracking System | Motherwarehouse-ng</p>
+            <p style="font-size: 12px;">gifted-g.github.io/Opay-Faulty-Device-Tracking-System/</p>
         </div>
     </div>
 
     <script>
-        // Switch between Excel-like tabs
         function switchSheet(sheetName) {
             // Hide all sheets
+            document.getElementById('motherwarehouse-sheet').style.display = 'none';
             document.getElementById('faulty-sheet').style.display = 'none';
             document.getElementById('markets-sheet').style.display = 'none';
+            document.getElementById('logistics-sheet').style.display = 'none';
+            document.getElementById('centers-sheet').style.display = 'none';
             
             // Show selected sheet
-            if(sheetName === 'faulty') {
-                document.getElementById('faulty-sheet').style.display = 'block';
-            } else if(sheetName === 'markets') {
-                document.getElementById('markets-sheet').style.display = 'block';
-            }
+            document.getElementById(sheetName + '-sheet').style.display = 'block';
             
             // Update active tab
             document.querySelectorAll('.excel-tab').forEach(tab => {
@@ -1231,36 +887,21 @@
             event.target.classList.add('active');
         }
 
-        // Export to Excel
+        function vendorLogin() {
+            const vendor = document.getElementById('vendorSelect').value;
+            if(vendor) {
+                alert(`🔐 Logged in as ${vendor}\nYou can now view and update your assigned tasks.`);
+            } else {
+                alert('Please select a logistics company');
+            }
+        }
+
+        function updateStatus(company) {
+            alert(`Updating status for ${company}\nSelect new status:\n- Pending Pickup (Red)\n- In Transit (Blue)\n- Delivered (Green)`);
+        }
+
         function exportToExcel() {
-            alert('Downloading Faulty_Dispatch data as Excel file...\nThis includes: Date, Tracking ID, Merchant Name, Phone, Device Type, Fault Type, Logistics, Pickup Location, Pickup Address, Destination, Delivery Status');
-        }
-
-        // Import from Excel
-        function importFromExcel() {
-            alert('Opening file picker to upload Excel file...\nThis will sync with your tracking system.');
-        }
-
-        // Verification functions
-        function verifyPhoto() {
-            alert('📸 Camera opened. Take photo of delivered device at the pickup/delivery location.');
-        }
-
-        function verifyGPS() {
-            alert('📍 GPS verification: Current location captured. Coordinates saved for delivery confirmation.');
-        }
-
-        function verifyOTP() {
-            let otp = prompt('Enter 4-digit verification OTP:');
-            if(otp && otp.length === 4) {
-                alert('✅ OTP verified! Delivery confirmed and recorded.');
-            }
-        }
-
-        function markDelivered() {
-            if(confirm('Mark this device as delivered? This will update the delivery status.')) {
-                alert('✅ Status updated to DELIVERED');
-            }
+            alert('📊 Exporting data with columns:\nTracking ID, Market Or City, Pick up Location, Delivery Location, Number of Cartoon, Quantity in pieces, Pickup Date, Logistics Company, Delivery Date, Status, Form Type');
         }
     </script>
 </body>
